@@ -1,35 +1,29 @@
 import { useEffect, useState } from "react";
-import FeaturedJob from "../FeaturedJob/FeaturedJob";
+import Job from "../Job/Job";
 
 const FeaturedJobs = () => {
 
-    const [featuredJobs, setFeaturedJobs] = useState([])
+    const [jobs, setJobs] = useState([])
 
-    const [defaultJobs, setDefaultJobs] = useState(4)
+    const [dataLength, setDataLength] = useState(4)
 
     useEffect(() => {
         fetch('jobs.json')
-            .then(response => response.json())
-            .then(data => setFeaturedJobs(data))
+            .then(res => res.json())
+            .then(data => setJobs(data))
     }, [])
 
-    const handleSeeAllJobs = () => {
-        setDefaultJobs()
-    }
-
     return (
-        <div>
-            <div className="text-center mt-32">
-                <h2 className="text-5xl font-extrabold text-black">Featured Jobs</h2>
-                <p className="text-[#757575] mt-4">Explore thousands of job opportunities with all the information you need. Its your future</p>
-            </div>
-            <div className="grid grid-cols-2 gap-6 mt-8">
+        <div className="m-10">
+            <h2 className="text-center text-5xl">Featured Jobs</h2>
+            <p className="text-center">Explore thousands of job opportunities with all the information you need. Its your future</p>
+            <div className="grid grid-cols-2 gap-6 m-10">
                 {
-                    featuredJobs.map(featuredJob => <FeaturedJob key={featuredJob.id} featuredJob={featuredJob}></FeaturedJob>)
+                    jobs.slice(0, dataLength).map(job => <Job key={job.id} job={job}></Job>)
                 }
             </div>
-            <div className="text-center mt-10 mb-32">
-                <button onClick={handleSeeAllJobs} className="text-xl font-extrabold text-white bg-gradient-to-t from-[#7E90FE] to-[#9873FF] py-5 px-7 rounded-lg">See All Jobs</button>
+            <div className={ dataLength === jobs.length ? 'hidden' : 'text-center' }>
+                <button onClick={() => setDataLength(jobs.length)} className="btn btn-primary">Show All Jobs</button>
             </div>
         </div>
     );

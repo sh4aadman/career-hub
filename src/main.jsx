@@ -4,40 +4,49 @@ import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
-} from "react-router-dom"
-import Root from './components/Root/Root.jsx'
-import Home from './components/Home/Home.jsx'
-import Statistics from './components/Statistics/Statistics'
-import AppliedJobs from './components/AppliedJobs/AppliedJobs'
-import Blog from './components/Blog/Blog'
+} from "react-router-dom";
+import Root from './components/Root/Root';
+import Home from './components/Home/Home';
+import Statistics from './components/Statistics/Statistics';
+import AppliedJobs from './components/AppliedJobs/AppliedJobs';
+import Blog from './components/Blog/Blog';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import JobDetails from './components/JobDetails/JobDetails';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Root></Root>,
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home></Home>
       },
       {
-        path: '/statistics',
+        path: "/statistics",
         element: <Statistics></Statistics>
       },
       {
-        path: '/applied-jobs',
-        element: <AppliedJobs></AppliedJobs>
+        path: "/applied",
+        element: <AppliedJobs></AppliedJobs>,
+        loader: () => fetch('/jobs.json')
       },
       {
-        path: '/blog',
+        path: "/blog",
         element: <Blog></Blog>
+      },
+      {
+        path: "/jobs/:id",
+        element: <JobDetails></JobDetails>,
+        loader: () => fetch('/jobs.json')
       }
     ]
-  }
-])
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

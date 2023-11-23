@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { FaMapLocation, FaMoneyBills } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const FeaturedJob = ({ featuredJob }) => {
 
-    const { logo, job_title, company_name, remote_or_onsite, location, job_type, salary } = featuredJob
+    const { id, logo, job_title, company_name, remote_or_onsite, location, job_type, salary } = featuredJob
 
     return (
         <div className='border border-[#E8E8E8] rounded-lg p-10'>
@@ -26,7 +27,8 @@ const FeaturedJob = ({ featuredJob }) => {
                     <h4>Salary : {salary}</h4>
                 </div>
             </div>
-            <button className='text-xl font-extrabold bg-gradient-to-t from-[#7E90FE] to-[#9873FF] text-white rounded py-2 px-4 mt-6'>View Details</button>
+            <Link to={`/jobs/${id}`}>
+                <button className='text-xl font-extrabold bg-gradient-to-t from-[#7E90FE] to-[#9873FF] text-white rounded py-2 px-4 mt-6'>View Details</button></Link>
         </div>
     );
 };
